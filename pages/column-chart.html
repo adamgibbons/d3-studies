@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+
+<style>
+
+body {
+  text-align: center;
+  background-color: #eee;
+}
+
+svg {
+  margin: auto;
+  
+}
+
+</style>
+
+<body>
+  
+<script src="//d3js.org/d3.v2.min.js" charset="utf-8"></script>
+
+<script>
+
+var data = [1, 1, 2, 3, 5, 8, 2, 4, 9, 3, 1, 1, 2, 3, 5, 8, 2, 4, 9, 3];
+var width = 900
+  , height = 400
+  , columnPadding = 1;
+
+var svg = d3.select('body')
+  .append('svg')
+  .attr('width', width)
+  .attr('height', height);
+
+var columns = svg.selectAll('rect')
+  .data(data)
+  .enter()
+  .append('rect')
+  .attr({
+    x: function(d, i) { return i * (width / data.length); },
+    y: function(d) { return height - 35 * d; },
+    width: function(d) { return width / data.length - columnPadding; },
+    height: function(d) { return 35 * (d); },
+    fill: function(d) { return 'rgb(0,' + d * 19 + ',' + d * 20 + ')'; }
+  });
+
+var labels = svg.selectAll('text')
+  .data(data)
+  .enter()
+  .append('text')
+  .text(function (d) { return d; })
+    .attr({
+      x: function(d, i) { return i * (width / data.length) + (width / data.length - columnPadding) / 2; },
+      y: function(d, i) { return (height - 35 * d) + 20; },
+      fill: 'white',
+      'font-family': 'heletica, sans-serif',
+      'text-anchor': 'middle',
+      'font-weight': 100
+    });
+
+</script>
+
+</body>
+
+<!-- http://chimera.labs.oreilly.com/books/1230000000345/ch06.html#_the_new_chart -->
